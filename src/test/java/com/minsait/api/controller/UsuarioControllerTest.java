@@ -29,10 +29,11 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Teste endpoints Usuario")
+@DisplayName("Teste endpoints de usuário")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@SuppressWarnings("unchecked")
 class UsuarioControllerTest {
 
     @Autowired

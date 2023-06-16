@@ -21,11 +21,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 
-@DisplayName("Teste endpoints API")
+@DisplayName("Teste endpoints de cliente")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class ApiControllerTest {
+class ClienteControllerTest {
 
     @Autowired
     private MockMvc mvc;

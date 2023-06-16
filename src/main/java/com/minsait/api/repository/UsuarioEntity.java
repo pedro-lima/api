@@ -3,7 +3,10 @@ package com.minsait.api.repository;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Predicate;
@@ -15,6 +18,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class UsuarioEntity {
 
     @Id
@@ -37,4 +41,37 @@ public class UsuarioEntity {
 
     @Column(name = "PERMISSOES")
     private String permissoes;
+    
+	public void setSenhaAndEncode(String senha) {
+		if (senha != null) {
+			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+			senha = encoder.encode(senha);
+		}
+
+		this.senha = senha;
+	}
+    
+    public Specification<UsuarioEntity> usuarioEntitySpecification() {
+        return (root, query, criteriaBuilder) -> {
+
+            List<Predicate> predicates = new ArrayList<>();
+
+            if (this.getNome() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")),
+                        "%" + this.getNome().trim().toLowerCase() + "%"));
+            }
+
+            if (this.getLogin() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("login")),
+                        "%" + this.getLogin().trim().toLowerCase() + "%"));
+            }
+
+            if (this.getEmail() != null) {
+                predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("email")),
+                        "%" + this.getEmail().trim().toLowerCase() + "%"));
+            }            
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+        };
+    }
 }

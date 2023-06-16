@@ -1,66 +1,55 @@
 package com.minsait.api.controller;
 
-import com.minsait.api.controller.dto.ClienteRequest;
-import com.minsait.api.controller.dto.ClienteResponse;
+import org.springframework.http.ResponseEntity;
+
 import com.minsait.api.controller.dto.MessageResponse;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 
 @Tag(name ="endpoints do curso de práticas tecnológicas")
-public interface ApiSwagger {
+public interface ApiSwagger<U, T> {
 
-    @Operation(summary = "Busca todos os clientes",
-                responses = {
-                    @ApiResponse(responseCode = "200", description = "Dados do cliente retornados com sucesso"),
-                    @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
-                    @ApiResponse(responseCode = "500", description = "Erro interno"),
-                    @ApiResponse(responseCode = "403", description = "Acesso negado"),
-                }
-    )
-    public ResponseEntity<Page<ClienteResponse>> clienteFindAll(String nome, String endereco, int page, int pagesize);
-
-    @Operation(summary = "Insere um novo cliente",
+    @Operation(summary = "Insere um novo registro",
         responses = {
-            @ApiResponse(responseCode = "200", description = "Cliente inserido com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Registro inserido com sucesso"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno"),
             @ApiResponse(responseCode = "403", description = "Acesso negado"),
         }
     )
-    public ResponseEntity<ClienteResponse> insert(ClienteRequest request);
+    public ResponseEntity<T> insert(U request);
 
-    @Operation(summary = "Atualiza um cliente",
+    @Operation(summary = "Atualiza um registro",
         responses = {
-            @ApiResponse(responseCode = "200", description = "Cliente atualizado com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Registro atualizado com sucesso"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno"),
             @ApiResponse(responseCode = "403", description = "Acesso negado"),
         }
     )
-    public ResponseEntity<ClienteResponse> update(ClienteRequest request);
+    public ResponseEntity<T> update(U request);
 
-    @Operation(summary = "Exclui um cliente",
+    @Operation(summary = "Exclui um registro",
         responses = {
-            @ApiResponse(responseCode = "200", description = "Cliente excluído com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Registro excluído com sucesso"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno"),
             @ApiResponse(responseCode = "403", description = "Acesso negado"),
         }
     )
     public ResponseEntity<MessageResponse> delete(Long id);
 
-    @Operation(summary = "Busca um cliente pelo id",
+    @Operation(summary = "Busca um registro pelo id",
         responses = {
-            @ApiResponse(responseCode = "200", description = "Dados do cliente retornados com sucesso"),
+            @ApiResponse(responseCode = "200", description = "Dados do registro retornados com sucesso"),
             @ApiResponse(responseCode = "400", description = "Parâmetros inválidos"),
-            @ApiResponse(responseCode = "404", description = "Cliente não encontrado"),
+            @ApiResponse(responseCode = "404", description = "Registro não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno"),
             @ApiResponse(responseCode = "403", description = "Acesso negado"),
         }
     )
-    public ResponseEntity<ClienteResponse> findById(Long id);
+    public ResponseEntity<T> findById(Long id);
 }
